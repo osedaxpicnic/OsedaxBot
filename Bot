@@ -9,32 +9,60 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
-# --- Message d'accueil automatique ---
-@bot.event
-async def on_ready():
-    print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
-    await bot.change_presence(activity=dpy.Game("🧠 Osedax Assistant actif !"))
+    await bot.change_presence(activity=dpy.Game("🌊 Festin d'os au fond des mers..."))
 
-    # Cherche le salon par nom
+    # Recherche automatique du salon principal
     channel = None
     for guild in bot.guilds:
         for ch in guild.text_channels:
-            if ch.name == "🤖-osedax-bot" or ch.name == "osedax-bot":
+            if ch.name in ["général", "discussion", "general"]:
                 channel = ch
                 break
 
-    # Envoie le message si trouvé
     if channel:
-        await channel.send(
-            "🧠 **Osedax Assistant est en ligne !**\n"
-            "Voici ce que je peux faire :\n"
-            "• `!ping` → test de connexion\n"
-            "• `!aide` → liste des commandes\n"
-            "• (plus à venir...)\n\n"
-            "_Tape `!aide` pour plus d’infos._"
+        message = (
+            "🌊 **Osedax Assistant a émergé des profondeurs.**\n\n"
+            "Sous la pression des abysses, les os se disloquent, et les vers se mettent à table.\n"
+            "Le festin peut commencer.\n\n"
+            "🦴 **Commandes disponibles :**\n"
+            "• `!ping` → pour vérifier que le courant passe encore.\n"
+            "• `!aide` → pour explorer les fonctions disponibles.\n"
+            "• `!fab` → pour convoquer les profondeurs de *Flesh and Blood*.\n\n"
+            "🐚 *Un pique-nique d’os, à mille brasses sous la surface.*\n"
+            "#OsedaxPicnic"
         )
+        await channel.send(message)
     else:
-        print("⚠️ Salon #🤖-osedax-bot introuvable.")
+        print("⚠️ Aucun salon 'général' trouvé pour envoyer le message d’accueil.")
+@bot.event
+async def on_ready():
+    print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
+    await bot.change_presence(activity=dpy.Game("🌊 Festin d'os au fond des mers..."))
+
+    # Recherche automatique du salon principal
+    channel = None
+    for guild in bot.guilds:
+        for ch in guild.text_channels:
+            if ch.name in ["général", "discussion", "general"]:
+                channel = ch
+                break
+
+    if channel:
+        message = (
+            "🌊 **Osedax Assistant a émergé des profondeurs.**\n\n"
+            "Sous la pression des abysses, les os se disloquent, et les vers se mettent à table.\n"
+            "Le festin peut commencer.\n\n"
+            "🦴 **Commandes disponibles :**\n"
+            "• `!ping` → pour vérifier que le courant passe encore.\n"
+            "• `!aide` → pour explorer les fonctions disponibles.\n"
+            "• `!fab` → pour convoquer les profondeurs de *Flesh and Blood*.\n\n"
+            "🐚 *Un pique-nique d’os, à mille brasses sous la surface.*\n"
+            "#OsedaxPicnic"
+        )
+        await channel.send(message)
+    else:
+        print("⚠️ Aucun salon 'général' trouvé pour envoyer le message d’accueil.")
+
 
 @bot.command()
 async def ping(ctx):
