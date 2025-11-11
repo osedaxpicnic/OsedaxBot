@@ -1,0 +1,21 @@
+import os
+import discord as dpy
+from discord.ext import commands
+
+intents = dpy.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send("Pong ! 🏓")
+
+TOKEN = os.getenv("DISCORD_TOKEN", "").strip()
+if not TOKEN:
+    raise RuntimeError("DISCORD_TOKEN manquant (variable d'environnement).")
+
+bot.run(TOKEN)
