@@ -9,6 +9,32 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
+# --- Message d'accueil automatique ---
+@bot.event
+async def on_ready():
+    print(f"✅ Connecté comme {bot.user} (ID: {bot.user.id})")
+    await bot.change_presence(activity=dpy.Game("🧠 Osedax Assistant actif !"))
+
+    # Cherche le salon par nom
+    channel = None
+    for guild in bot.guilds:
+        for ch in guild.text_channels:
+            if ch.name == "🤖-osedax-bot" or ch.name == "osedax-bot":
+                channel = ch
+                break
+
+    # Envoie le message si trouvé
+    if channel:
+        await channel.send(
+            "🧠 **Osedax Assistant est en ligne !**\n"
+            "Voici ce que je peux faire :\n"
+            "• `!ping` → test de connexion\n"
+            "• `!aide` → liste des commandes\n"
+            "• (plus à venir...)\n\n"
+            "_Tape `!aide` pour plus d’infos._"
+        )
+    else:
+        print("⚠️ Salon #🤖-osedax-bot introuvable.")
 
 @bot.command()
 async def ping(ctx):
